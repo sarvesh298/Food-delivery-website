@@ -6,9 +6,28 @@
   align-items: center;
   flex-direction: column;
 }
+
 .menu .menuTitle {
   font-family: cursive;
   font-size: 60px;
+}
+
+/* Menu Header with Cart Summary */
+.menuHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 70vw;
+  margin-bottom: 20px;
+}
+
+.cartSummary {
+  background-color: #f0f0f0;
+  padding: 10px 15px;
+  border-radius: 20px;
+  font-weight: bold;
+  color: #333;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .menuList {
@@ -20,21 +39,25 @@
 }
 
 /* MENU ITEM STYLING */
-
 .menuItem {
   border-radius: 15px;
   width: 300px;
-  height: 350px;
+  height: 400px; /* Increased height for cart button */
   margin: 20px;
   box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
+
 .menuItem:hover {
   box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.5);
   transition: 0.3s ease-in;
   cursor: pointer;
+  transform: translateY(-5px);
 }
 
-.menuItem div {
+.menuItemImage {
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
   width: 100%;
@@ -44,19 +67,157 @@
   background-size: cover;
 }
 
-.menuItem h1,
+.menuItemContent {
+  padding: 15px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.menuItem h1 {
+  margin: 0 0 10px 0;
+  font-size: 1.4rem;
+}
+
+.menuItem .price {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #ff6b35;
+  margin: 10px 0;
+}
+
 .menuItem p {
-  margin-left: 20px;
+  margin: 0;
+}
+
+/* Add to Cart Button */
+.addToCartBtn {
+  background-color: #ff6b35;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 15px;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.addToCartBtn:hover {
+  background-color: #e55a2b;
+  transform: scale(1.05);
+}
+
+.addToCartBtn svg {
+  font-size: 1.2rem;
+}
+
+.addToCartBtn:active {
+  transform: scale(0.98);
 }
 
 @media only screen and (max-width: 1300px) {
   .menuList {
     grid-template-columns: 1fr 1fr;
   }
+  
+  .menuHeader {
+    width: 80vw;
+  }
+  
+  .menuList {
+    width: 80vw;
+  }
 }
 
 @media only screen and (max-width: 800px) {
   .menuList {
     grid-template-columns: 1fr;
+  }
+  
+  .menuHeader {
+    width: 90vw;
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  .menuList {
+    width: 90vw;
+  }
+  
+  .menu .menuTitle {
+    font-size: 45px;
+  }
+  
+  .menuItem {
+    width: 280px;
+  }
+}
+/* Add these styles to your existing Menu.css */
+
+.cartSummary {
+  background-color: #f0f0f0;
+  padding: 10px 15px;
+  border-radius: 20px;
+  font-weight: bold;
+  color: #333;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+.cartSummary:hover {
+  background-color: #ff6b35;
+  color: white;
+  transform: scale(1.05);
+}
+
+.viewCartSection {
+  margin-top: 40px;
+  text-align: center;
+  position: sticky;
+  bottom: 20px;
+}
+
+.viewCartBtn {
+  background-color: #ff6b35;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+  transition: all 0.3s ease;
+}
+
+.viewCartBtn:hover {
+  background-color: #e55a2b;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+}
+
+@media only screen and (max-width: 800px) {
+  .viewCartBtn {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
   }
 }
