@@ -1,11 +1,21 @@
 import React from "react";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 
-function MenuItem({ image, name, price }) {
+function MenuItem({ image, name, price, onAddToCart }) {
   return (
     <div className="menuItem">
-      <div style={{ backgroundImage: `url(${image})` }}> </div>
-      <h1> {name} </h1>
-      <p> ${price} </p>
+      <div 
+        className="menuItemImage" 
+        style={{ backgroundImage: `url(${image})` }}
+      ></div>
+      <div className="menuItemContent">
+        <h1>{name}</h1>
+        <p className="price">${price}</p>
+        <button className="addToCartBtn" onClick={onAddToCart}>
+          <AddShoppingCartIcon />
+          Add to Cart
+        </button>
+      </div>
     </div>
   );
 }
