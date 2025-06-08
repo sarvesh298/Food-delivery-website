@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
@@ -10,17 +10,33 @@ import "../styles/Cart.css";
 function Cart() {
   const location = useLocation();
   const navigate = useNavigate();
-  const cartItems = location.state?.cartItems || [];
+  const [cartItems, setCartItems] = useState(location.state?.cartItems || []);
+
+  // Update cartItems when location state changes
+  useEffect(() => {
+    setCartItems(location.state?.cartItems || []);
+  }, [location.state?.cartItems]);
 
   const updateQuantity = (itemName, change) => {
-    // This would typically update global state
-    // For now, it's just a placeholder
-    console.log(`Update ${itemName} quantity by ${change}`);
+    setCartItems(prevItems => 
+      prevItems.map(item => {
+        if (item.name === itemName) {
+          const newQuantity = item.quantity + change;
+          // Ensure quantity doesn't go below 1
+          return {
+            ...item,
+            quantity: Math.max(1, newQuantity)
+          };
+        }
+        return item;
+      })
+    );
   };
 
   const removeItem = (itemName) => {
-    // This would typically remove from global state
-    console.log(`Remove ${itemName} from cart`);
+    setCartItems(prevItems => 
+      prevItems.filter(item => item.name !== itemName)
+    );
   };
 
   const getTotalPrice = () => {
@@ -72,7 +88,7 @@ function Cart() {
               </div>
               <div className="cartItemDetails">
                 <h3>{item.name}</h3>
-                <p className="itemPrice">${item.price}</p>
+                <p className="itemPrice">₹{item.price}</p>
                 <div className="quantityControls">
                   <button 
                     className="quantityBtn"
@@ -92,7 +108,7 @@ function Cart() {
               </div>
               <div className="cartItemActions">
                 <div className="itemTotal">
-                  ${(item.price * item.quantity).toFixed(2)}
+                  ₹{(item.price * item.quantity).toFixed(2)}
                 </div>
                 <button 
                   className="removeBtn"
@@ -111,20 +127,20 @@ function Cart() {
             <h3>Order Summary</h3>
             <div className="summaryRow">
               <span>Subtotal ({getTotalItems()} items)</span>
-              <span>${getTotalPrice()}</span>
+              <span>₹{getTotalPrice()}</span>
             </div>
             <div className="summaryRow">
               <span>Delivery Fee</span>
-              <span>$2.99</span>
+              <span>₹29.99</span>
             </div>
             <div className="summaryRow">
               <span>Tax</span>
-              <span>${(getTotalPrice() * 0.08).toFixed(2)}</span>
+              <span>₹{(getTotalPrice() * 0.08).toFixed(2)}</span>
             </div>
             <hr />
             <div className="summaryRow total">
               <span>Total</span>
-              <span>${(parseFloat(getTotalPrice()) + 2.99 + parseFloat(getTotalPrice()) * 0.08).toFixed(2)}</span>
+              <span>₹{(parseFloat(getTotalPrice()) + 29.99 + parseFloat(getTotalPrice()) * 0.08).toFixed(2)}</span>
             </div>
             <button className="checkoutBtn">
               Proceed to Checkout
