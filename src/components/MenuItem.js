@@ -10,7 +10,7 @@ function MenuItem({ image, name, price, onAddToCart }) {
       ></div>
       <div className="menuItemContent">
         <h1>{name}</h1>
-        <p className="price">${price}</p>
+        <p className="price">₹{price}</p>
         <button className="addToCartBtn" onClick={onAddToCart}>
           <AddShoppingCartIcon />
           Add to Cart
